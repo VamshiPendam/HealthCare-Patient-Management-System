@@ -1,3 +1,7 @@
+# HealthCare-Patient-Management-System
+
+A Salesforce-based Healthcare Patient Management System for managing patients, doctors, appointments, medical records, prescriptions, medicines, and billing. Built using Apex, LWC, Flows, custom objects, automation, validation rules, reports, and dashboards to streamline healthcare operations.
+
 # Salesforce DX Project
 
 Salesforce DX is a development approach that brings source-driven development, team collaboration, and continuous integration to the Salesforce Platform. Instead of working directly in an org through a web browser, you work with metadata as source files in a local DX project, track changes in version control, and deploy through automated processes.
@@ -55,4 +59,3 @@ Transform your ideas into custom Lightning apps that extend CRM workflows direct
 - [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/)
 - [Salesforce CLI Plugin Development Guide](https://developer.salesforce.com/docs/platform/salesforce-cli-plugin/guide/conceptual-overview.html)
 - [Salesforce VS Code Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
-
