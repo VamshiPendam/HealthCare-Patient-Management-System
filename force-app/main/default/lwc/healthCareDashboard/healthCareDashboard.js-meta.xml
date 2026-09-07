@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+
+    <apiVersion>67.0</apiVersion>
+
+    <isExposed>true</isExposed>
+
+    <masterLabel>Healthcare Dashboard</masterLabel>
+
+    <description>
+        Healthcare Patient Management Dashboard showing patients,
+        appointments, billing and medicine stock information.
+    </description>
+
+    <targets>
+
+        <target>lightning__AppPage</target>
+
+        <target>lightning__HomePage</target>
+
+    </targets>
+
+</LightningComponentBundle>

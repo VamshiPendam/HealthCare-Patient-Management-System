@@ -1,0 +1,289 @@
+<template>
+
+    <!-- Loading Spinner -->
+    <template if:true={isLoading}>
+        <lightning-spinner
+            alternative-text="Loading healthcare dashboard"
+            size="medium">
+        </lightning-spinner>
+    </template>
+
+    <div class="dashboard">
+
+        <!-- Header -->
+        <div class="dashboard-header">
+            <div>
+                <h1>🏥 Healthcare Patient Management</h1>
+                <p>Patient Care &amp; Hospital Operations Dashboard</p>
+            </div>
+
+            <lightning-button
+                label="Refresh"
+                icon-name="utility:refresh"
+                onclick={handleRefresh}
+                variant="neutral">
+            </lightning-button>
+        </div>
+
+        <!-- Error Message -->
+        <template if:true={errorMessage}>
+            <div class="error-box">
+                <lightning-icon
+                    icon-name="utility:error"
+                    size="small">
+                </lightning-icon>
+
+                <span>{errorMessage}</span>
+            </div>
+        </template>
+
+        <!-- Summary Cards -->
+        <div class="summary-grid">
+
+            <!-- Patients -->
+            <div class="summary-card">
+                <div class="card-icon patient-icon">
+                    <lightning-icon
+                        icon-name="standard:people"
+                        alternative-text="Patients"
+                        size="medium">
+                    </lightning-icon>
+                </div>
+
+                <div class="card-content">
+                    <p class="card-title">Total Patients</p>
+                    <h2>{totalPatients}</h2>
+                    <p class="card-subtitle">Registered patients</p>
+                </div>
+            </div>
+
+            <!-- Appointments -->
+            <div class="summary-card">
+                <div class="card-icon appointment-icon">
+                    <lightning-icon
+                        icon-name="standard:event"
+                        alternative-text="Appointments"
+                        size="medium">
+                    </lightning-icon>
+                </div>
+
+                <div class="card-content">
+                    <p class="card-title">Appointments</p>
+                    <h2>{upcomingAppointments}</h2>
+                    <p class="card-subtitle">Upcoming appointments</p>
+                </div>
+            </div>
+
+            <!-- Pending Bills -->
+            <div class="summary-card">
+                <div class="card-icon billing-icon">
+                    <lightning-icon
+                        icon-name="standard:currency"
+                        alternative-text="Billing"
+                        size="medium">
+                    </lightning-icon>
+                </div>
+
+                <div class="card-content">
+                    <p class="card-title">Pending Bills</p>
+                    <h2>{pendingBillsCount}</h2>
+                    <p class="card-subtitle">
+                        Total: ₹{pendingBillsAmount}
+                    </p>
+                </div>
+            </div>
+
+            <!-- Medicine -->
+            <div class="summary-card">
+                <div class="card-icon medicine-icon">
+                    <lightning-icon
+                        icon-name="standard:product"
+                        alternative-text="Medicines"
+                        size="medium">
+                    </lightning-icon>
+                </div>
+
+                <div class="card-content">
+                    <p class="card-title">Medicine Alerts</p>
+                    <h2>{medicineAlerts}</h2>
+                    <p class="card-subtitle">Low / out of stock</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Main Grid -->
+        <div class="main-grid">
+
+            <!-- Upcoming Appointments -->
+            <div class="dashboard-section">
+
+                <div class="section-header">
+                    <div>
+                        <h2>Upcoming Appointments</h2>
+                        <p>Scheduled patient appointments</p>
+                    </div>
+
+                    <lightning-icon
+                        icon-name="standard:event"
+                        size="small">
+                    </lightning-icon>
+                </div>
+
+                <template if:true={hasAppointments}>
+
+                    <div class="table-container">
+
+                        <table class="data-table">
+
+                            <thead>
+                                <tr>
+                                    <th>Patient</th>
+                                    <th>Doctor</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                <template
+                                    for:each={appointmentRows}
+                                    for:item="appointment">
+
+                                    <tr key={appointment.id}>
+
+                                        <td>
+                                            <strong>
+                                                {appointment.patientName}
+                                            </strong>
+                                        </td>
+
+                                        <td>
+                                            {appointment.doctorName}
+                                        </td>
+
+                                        <td>
+                                            {appointment.date}
+                                        </td>
+
+                                        <td>
+                                            {appointment.time}
+                                        </td>
+
+                                        <td>
+                                            <span class={appointment.statusClass}>
+                                                {appointment.status}
+                                            </span>
+                                        </td>
+
+                                    </tr>
+
+                                </template>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </template>
+
+                <template if:false={hasAppointments}>
+                    <div class="empty-state">
+                        <lightning-icon
+                            icon-name="utility:event"
+                            size="medium">
+                        </lightning-icon>
+
+                        <p>No upcoming appointments found.</p>
+                    </div>
+                </template>
+
+            </div>
+
+
+            <!-- Medicine Stock -->
+            <div class="dashboard-section">
+
+                <div class="section-header">
+                    <div>
+                        <h2>Medicine Stock Alerts</h2>
+                        <p>Medicines requiring attention</p>
+                    </div>
+
+                    <lightning-icon
+                        icon-name="standard:product"
+                        size="small">
+                    </lightning-icon>
+                </div>
+
+                <template if:true={hasMedicineAlerts}>
+
+                    <div class="table-container">
+
+                        <table class="data-table">
+
+                            <thead>
+                                <tr>
+                                    <th>Medicine</th>
+                                    <th>Stock</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                <template
+                                    for:each={medicineRows}
+                                    for:item="medicine">
+
+                                    <tr key={medicine.id}>
+
+                                        <td>
+                                            <strong>
+                                                {medicine.name}
+                                            </strong>
+                                        </td>
+
+                                        <td>
+                                            {medicine.stock}
+                                        </td>
+
+                                        <td>
+                                            <span class={medicine.statusClass}>
+                                                {medicine.status}
+                                            </span>
+                                        </td>
+
+                                    </tr>
+
+                                </template>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </template>
+
+                <template if:false={hasMedicineAlerts}>
+                    <div class="empty-state">
+                        <lightning-icon
+                            icon-name="utility:check"
+                            size="medium">
+                        </lightning-icon>
+
+                        <p>All medicines have sufficient stock.</p>
+                    </div>
+                </template>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</template>
