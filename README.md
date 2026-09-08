@@ -6,4 +6,4 @@ A Salesforce-based Healthcare Patient Management System for managing patients, d
 
 Complete documentation of the project is available at the link below:
 
-👉 [View Project Documentation](https://drive.google.com/file/d/1fZYBO7VCSdG-Bmo9Qwj3NUePXoTqDK3y/view?usp=drive_link)
+👉 [View Project Documentation](https://drive.google.com/file/d/1MZ6xnPKvtf1pdvvcaavk-C8TXbO8z8eB/view?usp=drive_link)
